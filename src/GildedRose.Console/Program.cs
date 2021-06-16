@@ -76,11 +76,12 @@ namespace GildedRose.Console
                 else
                 {
                     Items[i].Quality = Items[i].Quality - 1;
-                    Items[i].SellIn = Items[i].SellIn - 1;
-                    if (Items[i].SellIn < 0)
+                    if (Items[i].SellIn <= 0)
                     {
                         Items[i].Quality = Items[i].Quality - 1;
                     }
+
+                    Items[i].SellIn = Items[i].SellIn - 1;
                 }
             }
         }
