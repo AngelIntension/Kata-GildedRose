@@ -69,5 +69,40 @@ namespace GildedRose.Tests
 
             Assert.False(normalItem.Quality < 0);
         }
+
+        [Fact]
+        public static void IncrementQualityByOne_GivenAgedBrie()
+        {
+            Item brie = GetAgedBrie();
+            int initialQuality = brie.Quality;
+            Program app = new Program(new List<Item> { brie });
+
+            app.UpdateQuality();
+
+            Assert.Equal(
+                expected: initialQuality + 1,
+                actual: brie.Quality
+                );
+        }
+
+        private static Item GetAgedBrie()
+        {
+            return new Item { Name = "Aged Brie", Quality = 10, SellIn = 10 };
+        }
+
+        [Fact]
+        public static void ClampQualityAt50_GivenAgedBrie()
+        {
+            Item brie = GetAgedBrie();
+            brie.Quality = 50;
+            Program app = new Program(new List<Item> { brie });
+
+            app.UpdateQuality();
+
+            Assert.Equal(
+                expected: 50,
+                actual: brie.Quality
+                );
+        }
     }
 }
