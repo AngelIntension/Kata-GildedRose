@@ -2,16 +2,29 @@
 
 namespace GildedRose.Console
 {
-    class Program
+    public class Program
     {
-        IList<Item> Items;
+        public Program(IList<Item> items)
+        {
+            Items = items;
+        }
+
+        public IList<Item> Items { get; set; }
         static void Main(string[] args)
         {
             System.Console.WriteLine("OMGHAI!");
 
-            var app = new Program()
-                          {
-                              Items = new List<Item>
+            var app = new Program(GetStandardItems());
+
+            app.UpdateQuality();
+
+            System.Console.ReadKey();
+
+        }
+
+        private static List<Item> GetStandardItems()
+        {
+            return new List<Item>
                                           {
                                               new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
                                               new Item {Name = "Aged Brie", SellIn = 2, Quality = 0},
@@ -24,14 +37,7 @@ namespace GildedRose.Console
                                                       Quality = 20
                                                   },
                                               new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
-                                          }
-
-                          };
-
-            app.UpdateQuality();
-
-            System.Console.ReadKey();
-
+                                          };
         }
 
         public void UpdateQuality()
