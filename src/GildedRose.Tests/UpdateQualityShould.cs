@@ -104,5 +104,40 @@ namespace GildedRose.Tests
                 actual: brie.Quality
                 );
         }
+
+        [Fact]
+        public static void NotAffectQuality_GivenSulfuras()
+        {
+            Item sulfuras = GetSulfuras();
+            int initialQuality = sulfuras.Quality;
+            Program app = new Program(new List<Item> { sulfuras });
+
+            app.UpdateQuality();
+
+            Assert.Equal(
+                expected: initialQuality,
+                actual: sulfuras.Quality
+                );
+        }
+
+        private static Item GetSulfuras()
+        {
+            return new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80 };
+        }
+
+        [Fact]
+        public static void NotAffectSellIn_GivenSulfuras()
+        {
+            Item sulfuras = GetSulfuras();
+            int initialSellIn = sulfuras.SellIn;
+            Program app = new Program(new List<Item> { sulfuras });
+
+            app.UpdateQuality();
+
+            Assert.Equal(
+                expected: initialSellIn,
+                actual: sulfuras.SellIn
+                );
+        }
     }
 }
