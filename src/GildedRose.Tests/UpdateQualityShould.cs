@@ -139,5 +139,100 @@ namespace GildedRose.Tests
                 actual: sulfuras.SellIn
                 );
         }
+
+        [Fact]
+        public static void IncrementQualityByOne_GivenBackstagePassWithSellInGreaterThanTen()
+        {
+            Item backstagePass = GetBackstagePass();
+            int initialQuality = backstagePass.Quality;
+            Program app = new Program(new List<Item> { backstagePass });
+
+            app.UpdateQuality();
+
+            Assert.Equal(
+                expected: initialQuality + 1,
+                actual: backstagePass.Quality
+                );
+        }
+
+        private static Item GetBackstagePass()
+        {
+            return new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 15, Quality = 20 };
+        }
+
+        [Fact]
+        public static void ClampQualityAt50_GivenBackstagePass()
+        {
+            Item backstagePass = GetBackstagePass();
+            backstagePass.Quality = 50;
+            Program app = new Program(new List<Item> { backstagePass });
+
+            app.UpdateQuality();
+
+            Assert.Equal(
+                expected: 50,
+                actual: backstagePass.Quality
+                );
+        }
+
+        [Theory]
+        [InlineData(10)]
+        [InlineData(9)]
+        [InlineData(8)]
+        [InlineData(7)]
+        [InlineData(6)]
+        public static void IncrementQualityByTwo_GivenBackstagePassWithSellInBetweenTenAndFive(int sellIn)
+        {
+            Item backstagePass = GetBackstagePass();
+            backstagePass.SellIn = sellIn;
+            int initialQuality = backstagePass.Quality;
+            Program app = new Program(new List<Item> { backstagePass });
+
+            app.UpdateQuality();
+
+            Assert.Equal(
+                expected: initialQuality + 2,
+                actual: backstagePass.Quality
+                );
+        }
+
+        [Theory]
+        [InlineData(5)]
+        [InlineData(4)]
+        [InlineData(3)]
+        [InlineData(2)]
+        [InlineData(1)]
+        public static void IncrementQualityByThree_GivenBackstagePassWithSellInBetweenFiveAndOne(int sellIn)
+        {
+            Item backstagePass = GetBackstagePass();
+            backstagePass.SellIn = sellIn;
+            int initialQuality = backstagePass.Quality;
+            Program app = new Program(new List<Item> { backstagePass });
+
+            app.UpdateQuality();
+
+            Assert.Equal(
+                expected: initialQuality + 3,
+                actual: backstagePass.Quality
+                );
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(-2)]
+        public static void SetQualityToZero_GivenExpiredBackstagePass(int sellIn)
+        {
+            Item backstagePass = GetBackstagePass();
+            backstagePass.SellIn = sellIn;
+            Program app = new Program(new List<Item> { backstagePass });
+
+            app.UpdateQuality();
+
+            Assert.Equal(
+                expected: 0,
+                actual: backstagePass.Quality
+                );
+        }
     }
 }
