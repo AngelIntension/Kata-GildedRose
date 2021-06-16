@@ -4,12 +4,12 @@ namespace GildedRose.Console
 {
     public class Program
     {
-        public Program(IList<Item> items)
+        public Program(IList<SafeItem> items)
         {
             Items = items;
         }
 
-        public IList<Item> Items { get; set; }
+        public IList<SafeItem> Items { get; set; }
         static void Main(string[] args)
         {
             System.Console.WriteLine("OMGHAI!");
@@ -22,22 +22,17 @@ namespace GildedRose.Console
 
         }
 
-        private static List<Item> GetStandardItems()
+        private static List<SafeItem> GetStandardItems()
         {
-            return new List<Item>
-                                          {
-                                              new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
-                                              new Item {Name = "Aged Brie", SellIn = 2, Quality = 0},
-                                              new Item {Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7},
-                                              new Item {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
-                                              new Item
-                                                  {
-                                                      Name = "Backstage passes to a TAFKAL80ETC concert",
-                                                      SellIn = 15,
-                                                      Quality = 20
-                                                  },
-                                              new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
-                                          };
+            return new List<SafeItem>
+            {
+                new SafeItem { Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20 },
+                new SafeItem { Name = "Aged Brie", SellIn = 2, Quality = 0 },
+                new SafeItem { Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7 },
+                new SafeItem { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80 },
+                new SafeItem { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 15, Quality = 20 },
+                new SafeItem { Name = "Conjured Mana Cake", SellIn = 3, Quality = 6 }
+            };
         }
 
         public void UpdateQuality()

@@ -1,7 +1,6 @@
 ﻿using Xunit;
 using GildedRose.Console;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GildedRose.Tests
 {
@@ -10,9 +9,9 @@ namespace GildedRose.Tests
         [Fact]
         public static void DecrementQualityByOne_GivenNormalItem()
         {
-            Item normalItem = GetNormalItem();
+            SafeItem normalItem = GetNormalItem();
             int initialQuality = normalItem.Quality;
-            Program app = new Program(new List<Item> { normalItem });
+            Program app = new Program(new List<SafeItem> { normalItem });
 
             app.UpdateQuality();
 
@@ -22,17 +21,17 @@ namespace GildedRose.Tests
                 );
         }
 
-        private static Item GetNormalItem()
+        private static SafeItem GetNormalItem()
         {
-            return new Item { Name = "Normal Item", Quality = 10, SellIn = 10 };
+            return new SafeItem { Name = "Normal Item", Quality = 10, SellIn = 10 };
         }
 
         [Fact]
         public static void DecrementSellInByOne_GivenNormalItem()
         {
-            Item normalItem = GetNormalItem();
+            SafeItem normalItem = GetNormalItem();
             int initialSellIn = normalItem.SellIn;
-            Program app = new Program(new List<Item> { normalItem });
+            Program app = new Program(new List<SafeItem> { normalItem });
 
             app.UpdateQuality();
 
@@ -45,10 +44,10 @@ namespace GildedRose.Tests
         [Fact]
         public static void DecrementQualityByTwo_GivenExpiredNormalItem()
         {
-            Item normalItem = GetNormalItem();
+            SafeItem normalItem = GetNormalItem();
             normalItem.SellIn = 0;
             int initialQuality = normalItem.Quality;
-            Program app = new Program(new List<Item> { normalItem });
+            Program app = new Program(new List<SafeItem> { normalItem });
 
             app.UpdateQuality();
 
@@ -61,9 +60,9 @@ namespace GildedRose.Tests
         [Fact]
         public static void ClampQualityAtZero_GivenNormalItem()
         {
-            Item normalItem = GetNormalItem();
+            SafeItem normalItem = GetNormalItem();
             normalItem.Quality = 0;
-            Program app = new Program(new List<Item> { normalItem });
+            Program app = new Program(new List<SafeItem> { normalItem });
 
             app.UpdateQuality();
 
@@ -73,9 +72,9 @@ namespace GildedRose.Tests
         [Fact]
         public static void IncrementQualityByOne_GivenAgedBrie()
         {
-            Item brie = GetAgedBrie();
+            SafeItem brie = GetAgedBrie();
             int initialQuality = brie.Quality;
-            Program app = new Program(new List<Item> { brie });
+            Program app = new Program(new List<SafeItem> { brie });
 
             app.UpdateQuality();
 
@@ -85,17 +84,17 @@ namespace GildedRose.Tests
                 );
         }
 
-        private static Item GetAgedBrie()
+        private static SafeItem GetAgedBrie()
         {
-            return new Item { Name = "Aged Brie", Quality = 10, SellIn = 10 };
+            return new SafeItem { Name = "Aged Brie", Quality = 10, SellIn = 10 };
         }
 
         [Fact]
         public static void ClampQualityAt50_GivenAgedBrie()
         {
-            Item brie = GetAgedBrie();
+            SafeItem brie = GetAgedBrie();
             brie.Quality = 50;
-            Program app = new Program(new List<Item> { brie });
+            Program app = new Program(new List<SafeItem> { brie });
 
             app.UpdateQuality();
 
@@ -108,9 +107,9 @@ namespace GildedRose.Tests
         [Fact]
         public static void NotAffectQuality_GivenSulfuras()
         {
-            Item sulfuras = GetSulfuras();
+            SafeItem sulfuras = GetSulfuras();
             int initialQuality = sulfuras.Quality;
-            Program app = new Program(new List<Item> { sulfuras });
+            Program app = new Program(new List<SafeItem> { sulfuras });
 
             app.UpdateQuality();
 
@@ -120,17 +119,17 @@ namespace GildedRose.Tests
                 );
         }
 
-        private static Item GetSulfuras()
+        private static SafeItem GetSulfuras()
         {
-            return new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80 };
+            return new SafeItem { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80 };
         }
 
         [Fact]
         public static void NotAffectSellIn_GivenSulfuras()
         {
-            Item sulfuras = GetSulfuras();
+            SafeItem sulfuras = GetSulfuras();
             int initialSellIn = sulfuras.SellIn;
-            Program app = new Program(new List<Item> { sulfuras });
+            Program app = new Program(new List<SafeItem> { sulfuras });
 
             app.UpdateQuality();
 
@@ -143,9 +142,9 @@ namespace GildedRose.Tests
         [Fact]
         public static void IncrementQualityByOne_GivenBackstagePassWithSellInGreaterThanTen()
         {
-            Item backstagePass = GetBackstagePass();
+            SafeItem backstagePass = GetBackstagePass();
             int initialQuality = backstagePass.Quality;
-            Program app = new Program(new List<Item> { backstagePass });
+            Program app = new Program(new List<SafeItem> { backstagePass });
 
             app.UpdateQuality();
 
@@ -155,17 +154,17 @@ namespace GildedRose.Tests
                 );
         }
 
-        private static Item GetBackstagePass()
+        private static SafeItem GetBackstagePass()
         {
-            return new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 15, Quality = 20 };
+            return new SafeItem { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 15, Quality = 20 };
         }
 
         [Fact]
         public static void ClampQualityAt50_GivenBackstagePass()
         {
-            Item backstagePass = GetBackstagePass();
+            SafeItem backstagePass = GetBackstagePass();
             backstagePass.Quality = 50;
-            Program app = new Program(new List<Item> { backstagePass });
+            Program app = new Program(new List<SafeItem> { backstagePass });
 
             app.UpdateQuality();
 
@@ -183,10 +182,10 @@ namespace GildedRose.Tests
         [InlineData(6)]
         public static void IncrementQualityByTwo_GivenBackstagePassWithSellInBetweenTenAndFive(int sellIn)
         {
-            Item backstagePass = GetBackstagePass();
+            SafeItem backstagePass = GetBackstagePass();
             backstagePass.SellIn = sellIn;
             int initialQuality = backstagePass.Quality;
-            Program app = new Program(new List<Item> { backstagePass });
+            Program app = new Program(new List<SafeItem> { backstagePass });
 
             app.UpdateQuality();
 
@@ -204,10 +203,10 @@ namespace GildedRose.Tests
         [InlineData(1)]
         public static void IncrementQualityByThree_GivenBackstagePassWithSellInBetweenFiveAndOne(int sellIn)
         {
-            Item backstagePass = GetBackstagePass();
+            SafeItem backstagePass = GetBackstagePass();
             backstagePass.SellIn = sellIn;
             int initialQuality = backstagePass.Quality;
-            Program app = new Program(new List<Item> { backstagePass });
+            Program app = new Program(new List<SafeItem> { backstagePass });
 
             app.UpdateQuality();
 
@@ -223,9 +222,9 @@ namespace GildedRose.Tests
         [InlineData(-2)]
         public static void SetQualityToZero_GivenExpiredBackstagePass(int sellIn)
         {
-            Item backstagePass = GetBackstagePass();
+            SafeItem backstagePass = GetBackstagePass();
             backstagePass.SellIn = sellIn;
-            Program app = new Program(new List<Item> { backstagePass });
+            Program app = new Program(new List<SafeItem> { backstagePass });
 
             app.UpdateQuality();
 
