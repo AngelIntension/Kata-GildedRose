@@ -9,7 +9,7 @@ namespace GildedRose.Console
             Items = items;
         }
 
-        IList<Item> Items { get; set; }
+        public IList<Item> Items { get; set; }
         static void Main(string[] args)
         {
             System.Console.WriteLine("OMGHAI!");
