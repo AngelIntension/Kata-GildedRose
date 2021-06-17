@@ -26,6 +26,7 @@ namespace GildedRose.Console
                 new Rule_BackstagePassZeroQualityWhenExpired(),
                 new Rule_DecrementQuality(),
                 new Rule_DecrementQualityWhenExpired(),
+                new Rule_ConjuredManaCakeDecrementQuality(),
                 new Rule_DecrementSellIn()
             };
         }
