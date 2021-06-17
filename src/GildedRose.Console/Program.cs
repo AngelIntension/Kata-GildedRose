@@ -1,25 +1,41 @@
-﻿using System.Collections.Generic;
+﻿using GildedRose.Console.Rules;
+using System.Collections.Generic;
 
 namespace GildedRose.Console
 {
     public class Program
     {
-        public Program(IList<SafeItem> items)
+        public List<SafeItem> Items { get; set; }
+        public List<IRule> Rules { get; set; }
+
+        public Program(List<SafeItem> items)
         {
             Items = items;
+            PopulateRuleset();
         }
 
-        public IList<SafeItem> Items { get; set; }
+        private void PopulateRuleset()
+        {
+            Rules = new List<IRule>
+            {
+                new Rule_AgedBrieIncrementQuality(),
+                new Rule_AgedBrieExpiredIncrementQuality(),
+                new Rule_BackstagePassIncrementQuality(),
+                new Rule_BackstagePassIncrementQualityWithSellInTenOrLess(),
+                new Rule_BackstagePassIncrementQualityWithSellInFiveOrLess(),
+                new Rule_BackstagePassZeroQualityWhenExpired(),
+                new Rule_DecrementQuality(),
+                new Rule_DecrementQualityWhenExpired(),
+                new Rule_DecrementSellIn()
+            };
+        }
+
         static void Main(string[] args)
         {
             System.Console.WriteLine("OMGHAI!");
-
             var app = new Program(GetStandardItems());
-
             app.UpdateQuality();
-
             System.Console.ReadKey();
-
         }
 
         private static List<SafeItem> GetStandardItems()
@@ -37,51 +53,14 @@ namespace GildedRose.Console
 
         public void UpdateQuality()
         {
-            for (var i = 0; i < Items.Count; i++)
+            foreach (SafeItem item in Items)
             {
-                if (Items[i].Name == "Aged Brie")
+                foreach (IRule rule in Rules)
                 {
-                    Items[i].Quality = Items[i].Quality + 1;
-                    if (Items[i].SellIn < 0)
+                    if (rule.Applies(item))
                     {
-                        Items[i].Quality = Items[i].Quality + 1;
+                        rule.Invoke(item);
                     }
-
-                    Items[i].SellIn = Items[i].SellIn - 1;
-                }
-                else if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                {
-                    Items[i].Quality = Items[i].Quality + 1;
-
-                    if (Items[i].SellIn < 11)
-                    {
-                        Items[i].Quality = Items[i].Quality + 1;
-                    }
-
-                    if (Items[i].SellIn < 6)
-                    {
-                        Items[i].Quality = Items[i].Quality + 1;
-                    }
-
-                    if (Items[i].SellIn <= 0)
-                    {
-                        Items[i].Quality = 0;
-                    }
-
-                    Items[i].SellIn = Items[i].SellIn - 1;
-                }
-                else if (Items[i].Name == "Sulfuras, Hand of Ragnaros")
-                {
-                }
-                else
-                {
-                    Items[i].Quality = Items[i].Quality - 1;
-                    if (Items[i].SellIn <= 0)
-                    {
-                        Items[i].Quality = Items[i].Quality - 1;
-                    }
-
-                    Items[i].SellIn = Items[i].SellIn - 1;
                 }
             }
         }
@@ -95,5 +74,4 @@ namespace GildedRose.Console
 
         public int Quality { get; set; }
     }
-
 }
