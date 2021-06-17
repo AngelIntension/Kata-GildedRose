@@ -13,7 +13,7 @@
 
         public void Invoke(SafeItem item)
         {
-            item.Quality--;
+            item.Quality -= 2;
         }
     }
 }
