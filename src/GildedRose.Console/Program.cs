@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GildedRose.Console.Rules;
+using System.Collections.Generic;
 
 namespace GildedRose.Console
 {
@@ -7,9 +8,19 @@ namespace GildedRose.Console
         public Program(IList<SafeItem> items)
         {
             Items = items;
+            PopulateRuleset();
+        }
+
+        private void PopulateRuleset()
+        {
+            Rules = new List<IRule>
+            {
+                new Rule_AgedBrieIncrementQuality()
+            };
         }
 
         public IList<SafeItem> Items { get; set; }
+        public List<IRule> Rules { get; set; }
         static void Main(string[] args)
         {
             System.Console.WriteLine("OMGHAI!");
@@ -39,9 +50,16 @@ namespace GildedRose.Console
         {
             for (var i = 0; i < Items.Count; i++)
             {
+                foreach(IRule rule in Rules)
+                {
+                    if (rule.Applies(Items[i]))
+                    {
+                        rule.Invoke(Items[i]);
+                    }
+                }
+
                 if (Items[i].Name == "Aged Brie")
                 {
-                    Items[i].Quality = Items[i].Quality + 1;
                     if (Items[i].SellIn < 0)
                     {
                         Items[i].Quality = Items[i].Quality + 1;
@@ -85,6 +103,11 @@ namespace GildedRose.Console
                 }
             }
         }
+
+        public void IncrementQualityAgedBrie(SafeItem item)
+        {
+            item.Quality++;
+        }
     }
 
     public class Item
@@ -95,5 +118,4 @@ namespace GildedRose.Console
 
         public int Quality { get; set; }
     }
-
 }
