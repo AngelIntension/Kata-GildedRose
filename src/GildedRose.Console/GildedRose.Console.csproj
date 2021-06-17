@@ -50,6 +50,8 @@
     <Compile Include="Rules\Rule_BackstagePassIncrementQualityWithSellInFiveOrLess.cs" />
     <Compile Include="Rules\Rule_BackstagePassIncrementQualityWithSellInTenOrLess.cs" />
     <Compile Include="Rules\Rule_BackstagePassZeroQualityWhenExpired.cs" />
+    <Compile Include="Rules\Rule_ConjuredManaCakeDecrementQuality.cs" />
+    <Compile Include="Rules\Rule_ConjuredManaCakeDecrementQualityWhenExpired.cs" />
     <Compile Include="Rules\Rule_DecrementQuality.cs" />
     <Compile Include="Rules\Rule_DecrementQualityWhenExpired.cs" />
     <Compile Include="Rules\Rule_DecrementSellIn.cs" />

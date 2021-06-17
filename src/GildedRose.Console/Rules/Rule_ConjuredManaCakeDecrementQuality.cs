@@ -1,16 +1,16 @@
 ﻿namespace GildedRose.Console.Rules
 {
-    public class Rule_AgedBrieIncrementQuality : IRule
+    public class Rule_ConjuredManaCakeDecrementQuality : IRule
     {
         public bool Applies(SafeItem item)
         {
-            return item.Name == "Aged Brie"
+            return item.Name == "Conjured Mana Cake"
                 && item.SellIn > 0;
         }
 
         public void Invoke(SafeItem item)
         {
-            item.Quality++;
+            item.Quality -= 2;
         }
     }
 }

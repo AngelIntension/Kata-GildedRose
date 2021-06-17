@@ -104,6 +104,26 @@ namespace GildedRose.Tests
                 );
         }
 
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(-2)]
+        public static void IncrementQualityByTwo_GivenExpiredAgedBrie(int sellIn)
+        {
+            SafeItem brie = GetAgedBrie();
+            brie.SellIn = sellIn;
+            int initialQuality = brie.Quality;
+            Program app = new Program(new List<SafeItem> { brie });
+
+            app.UpdateQuality();
+
+            Assert.Equal(
+                expected: initialQuality +2,
+                actual: brie.Quality
+                );
+
+        }
+
         [Fact]
         public static void NotAffectQuality_GivenSulfuras()
         {
@@ -232,6 +252,46 @@ namespace GildedRose.Tests
                 expected: 0,
                 actual: backstagePass.Quality
                 );
+        }
+
+        [Fact]
+        public static void DecrementQualityByTwo_GivenConjuredManaCake()
+        {
+            SafeItem manaCake = GetManaCake();
+            int initialQuality = manaCake.Quality;
+            Program app = new Program(new List<SafeItem> { manaCake });
+
+            app.UpdateQuality();
+
+            Assert.Equal(
+                expected: initialQuality - 2,
+                actual: manaCake.Quality
+                );
+        }
+
+        private static SafeItem GetManaCake()
+        {
+            return new SafeItem { Name = "Conjured Mana Cake", Quality = 10, SellIn = 10 };
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(-2)]
+        public static void DecrementQualityByFour_GivenExpiredConjuredManaCake(int sellIn)
+        {
+            SafeItem manaCake = GetManaCake();
+            manaCake.SellIn = sellIn;
+            int initialQuality = manaCake.Quality;
+            Program app = new Program(new List<SafeItem> { manaCake });
+
+            app.UpdateQuality();
+
+            Assert.Equal(
+                expected: initialQuality - 4,
+                actual: manaCake.Quality
+                );
+
         }
     }
 }
