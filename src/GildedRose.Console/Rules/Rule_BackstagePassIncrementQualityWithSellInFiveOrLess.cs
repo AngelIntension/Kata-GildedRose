@@ -6,12 +6,12 @@
         {
             return item.Name == "Backstage passes to a TAFKAL80ETC concert"
                 && item.SellIn > 0
-                && item.SellIn < 6;
+                && item.SellIn <= 5;
         }
 
         public void Invoke(SafeItem item)
         {
-            item.Quality++;
+            item.Quality += 3;
         }
     }
 }
