@@ -5,7 +5,10 @@ namespace GildedRose.Console
 {
     public class Program
     {
-        public Program(IList<SafeItem> items)
+        public List<SafeItem> Items { get; set; }
+        public List<IRule> Rules { get; set; }
+
+        public Program(List<SafeItem> items)
         {
             Items = items;
             PopulateRuleset();
@@ -27,18 +30,12 @@ namespace GildedRose.Console
             };
         }
 
-        public IList<SafeItem> Items { get; set; }
-        public List<IRule> Rules { get; set; }
         static void Main(string[] args)
         {
             System.Console.WriteLine("OMGHAI!");
-
             var app = new Program(GetStandardItems());
-
             app.UpdateQuality();
-
             System.Console.ReadKey();
-
         }
 
         private static List<SafeItem> GetStandardItems()
