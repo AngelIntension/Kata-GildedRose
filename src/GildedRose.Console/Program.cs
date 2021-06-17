@@ -15,7 +15,9 @@ namespace GildedRose.Console
         {
             Rules = new List<IRule>
             {
-                new Rule_AgedBrieIncrementQuality()
+                new Rule_AgedBrieIncrementQuality(),
+                new Rule_AgedBrieExpiredIncrementQuality(),
+                new Rule_DecrementSellIn()
             };
         }
 
@@ -50,22 +52,10 @@ namespace GildedRose.Console
         {
             for (var i = 0; i < Items.Count; i++)
             {
-                foreach(IRule rule in Rules)
-                {
-                    if (rule.Applies(Items[i]))
-                    {
-                        rule.Invoke(Items[i]);
-                    }
-                }
 
                 if (Items[i].Name == "Aged Brie")
                 {
-                    if (Items[i].SellIn < 0)
-                    {
-                        Items[i].Quality = Items[i].Quality + 1;
-                    }
-
-                    Items[i].SellIn = Items[i].SellIn - 1;
+                    // Rules engine
                 }
                 else if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
                 {
@@ -85,8 +75,6 @@ namespace GildedRose.Console
                     {
                         Items[i].Quality = 0;
                     }
-
-                    Items[i].SellIn = Items[i].SellIn - 1;
                 }
                 else if (Items[i].Name == "Sulfuras, Hand of Ragnaros")
                 {
@@ -98,15 +86,16 @@ namespace GildedRose.Console
                     {
                         Items[i].Quality = Items[i].Quality - 1;
                     }
+                }
 
-                    Items[i].SellIn = Items[i].SellIn - 1;
+                foreach (IRule rule in Rules)
+                {
+                    if (rule.Applies(Items[i]))
+                    {
+                        rule.Invoke(Items[i]);
+                    }
                 }
             }
-        }
-
-        public void IncrementQualityAgedBrie(SafeItem item)
-        {
-            item.Quality++;
         }
     }
 
