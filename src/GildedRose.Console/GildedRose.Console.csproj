@@ -46,6 +46,10 @@
     <Compile Include="Rules\IRule.cs" />
     <Compile Include="Rules\Rule_AgedBrieExpiredIncrementQuality.cs" />
     <Compile Include="Rules\Rule_AgedBrieIncrementQuality.cs" />
+    <Compile Include="Rules\Rule_BackstagePassIncrementQuality.cs" />
+    <Compile Include="Rules\Rule_BackstagePassIncrementQualityWithSellInFiveOrLess.cs" />
+    <Compile Include="Rules\Rule_BackstagePassIncrementQualityWithSellInTenOrLess.cs" />
+    <Compile Include="Rules\Rule_BackstagePassZeroQualityWhenExpired.cs" />
     <Compile Include="Rules\Rule_DecrementSellIn.cs" />
     <Compile Include="SafeItem.cs" />
   </ItemGroup>

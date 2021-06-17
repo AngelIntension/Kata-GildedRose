@@ -17,6 +17,10 @@ namespace GildedRose.Console
             {
                 new Rule_AgedBrieIncrementQuality(),
                 new Rule_AgedBrieExpiredIncrementQuality(),
+                new Rule_BackstagePassIncrementQuality(),
+                new Rule_BackstagePassIncrementQualityWithSellInTenOrLess(),
+                new Rule_BackstagePassIncrementQualityWithSellInFiveOrLess(),
+                new Rule_BackstagePassZeroQualityWhenExpired(),
                 new Rule_DecrementSellIn()
             };
         }
@@ -59,22 +63,7 @@ namespace GildedRose.Console
                 }
                 else if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
                 {
-                    Items[i].Quality = Items[i].Quality + 1;
-
-                    if (Items[i].SellIn < 11)
-                    {
-                        Items[i].Quality = Items[i].Quality + 1;
-                    }
-
-                    if (Items[i].SellIn < 6)
-                    {
-                        Items[i].Quality = Items[i].Quality + 1;
-                    }
-
-                    if (Items[i].SellIn <= 0)
-                    {
-                        Items[i].Quality = 0;
-                    }
+                    // Rules engine
                 }
                 else if (Items[i].Name == "Sulfuras, Hand of Ragnaros")
                 {
