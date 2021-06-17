@@ -237,7 +237,7 @@ namespace GildedRose.Tests
         [Fact]
         public static void DecrementQualityByTwo_GivenConjuredManaCake()
         {
-            SafeItem manaCake = new SafeItem { Name = "Conjured Mana Cake", Quality = 10, SellIn = 10 };
+            SafeItem manaCake = GetManaCake();
             int initialQuality = manaCake.Quality;
             Program app = new Program(new List<SafeItem> { manaCake });
 
@@ -247,6 +247,31 @@ namespace GildedRose.Tests
                 expected: initialQuality - 2,
                 actual: manaCake.Quality
                 );
+        }
+
+        private static SafeItem GetManaCake()
+        {
+            return new SafeItem { Name = "Conjured Mana Cake", Quality = 10, SellIn = 10 };
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(-2)]
+        public static void DecrementQualityByFour_GivenExpiredConjuredManaCake(int sellIn)
+        {
+            SafeItem manaCake = GetManaCake();
+            manaCake.SellIn = sellIn;
+            int initialQuality = manaCake.Quality;
+            Program app = new Program(new List<SafeItem> { manaCake });
+
+            app.UpdateQuality();
+
+            Assert.Equal(
+                expected: initialQuality - 4,
+                actual: manaCake.Quality
+                );
+
         }
     }
 }
