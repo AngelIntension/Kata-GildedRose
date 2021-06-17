@@ -56,13 +56,13 @@ namespace GildedRose.Console
 
         public void UpdateQuality()
         {
-            for (var i = 0; i < Items.Count; i++)
+            foreach (SafeItem item in Items)
             {
                 foreach (IRule rule in Rules)
                 {
-                    if (rule.Applies(Items[i]))
+                    if (rule.Applies(item))
                     {
-                        rule.Invoke(Items[i]);
+                        rule.Invoke(item);
                     }
                 }
             }
