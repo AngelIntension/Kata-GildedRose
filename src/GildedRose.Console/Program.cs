@@ -21,6 +21,8 @@ namespace GildedRose.Console
                 new Rule_BackstagePassIncrementQualityWithSellInTenOrLess(),
                 new Rule_BackstagePassIncrementQualityWithSellInFiveOrLess(),
                 new Rule_BackstagePassZeroQualityWhenExpired(),
+                new Rule_DecrementQuality(),
+                new Rule_DecrementQualityWhenExpired(),
                 new Rule_DecrementSellIn()
             };
         }
@@ -56,27 +58,6 @@ namespace GildedRose.Console
         {
             for (var i = 0; i < Items.Count; i++)
             {
-
-                if (Items[i].Name == "Aged Brie")
-                {
-                    // Rules engine
-                }
-                else if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                {
-                    // Rules engine
-                }
-                else if (Items[i].Name == "Sulfuras, Hand of Ragnaros")
-                {
-                }
-                else
-                {
-                    Items[i].Quality = Items[i].Quality - 1;
-                    if (Items[i].SellIn <= 0)
-                    {
-                        Items[i].Quality = Items[i].Quality - 1;
-                    }
-                }
-
                 foreach (IRule rule in Rules)
                 {
                     if (rule.Applies(Items[i]))
