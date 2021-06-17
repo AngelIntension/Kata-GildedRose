@@ -233,5 +233,20 @@ namespace GildedRose.Tests
                 actual: backstagePass.Quality
                 );
         }
+
+        [Fact]
+        public static void DecrementQualityByTwo_GivenConjuredManaCake()
+        {
+            SafeItem manaCake = new SafeItem { Name = "Conjured Mana Cake", Quality = 10, SellIn = 10 };
+            int initialQuality = manaCake.Quality;
+            Program app = new Program(new List<SafeItem> { manaCake });
+
+            app.UpdateQuality();
+
+            Assert.Equal(
+                expected: initialQuality - 2,
+                actual: manaCake.Quality
+                );
+        }
     }
 }
