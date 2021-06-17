@@ -4,7 +4,8 @@
     {
         public bool Applies(SafeItem item)
         {
-            return item.Name == "Aged Brie";
+            return item.Name == "Aged Brie"
+                && item.SellIn > 0;
         }
 
         public void Invoke(SafeItem item)

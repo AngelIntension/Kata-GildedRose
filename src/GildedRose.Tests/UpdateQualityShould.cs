@@ -104,6 +104,26 @@ namespace GildedRose.Tests
                 );
         }
 
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(-2)]
+        public static void IncrementQualityByTwo_GivenExpiredAgedBrie(int sellIn)
+        {
+            SafeItem brie = GetAgedBrie();
+            brie.SellIn = sellIn;
+            int initialQuality = brie.Quality;
+            Program app = new Program(new List<SafeItem> { brie });
+
+            app.UpdateQuality();
+
+            Assert.Equal(
+                expected: initialQuality +2,
+                actual: brie.Quality
+                );
+
+        }
+
         [Fact]
         public static void NotAffectQuality_GivenSulfuras()
         {
